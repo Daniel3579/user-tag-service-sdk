@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+option go_package = "./gen;user_tag_pb";
+
+message IdRequest {
+    int32 user_id = 1;
+}

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option go_package = "./gen;user_tag_pb";
+
+message TagResponse {
+    int32 tag_id = 1;
+}
+
+message MultipleTagResponse {
+    repeated TagResponse tag_ids= 1;
+}
