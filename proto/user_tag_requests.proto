@@ -2,6 +2,14 @@ syntax = "proto3";
 
 option go_package = "./gen;user_tag_pb";
 
-message IdRequest {
+message UserIdRequest {
     int32 user_id = 1;
+}
+
+message TagIdRequest {
+    int32 tag_id = 1;
+}
+
+message TagIdRequestMultiple {
+    repeated TagIdRequest tag_ids = 1;
 }

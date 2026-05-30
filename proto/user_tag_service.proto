@@ -7,9 +7,10 @@ import "user_tag_responses.proto";
 
 service UserTagService {
     rpc Create (UserTag) returns (UserTag);
-    rpc ReadMultiple (IdRequest) returns (MultipleTagResponse);
+    rpc ReadTagMultiple (UserIdRequest) returns (MultipleTagResponse);
+    rpc ReadUserMultiple (TagIdRequestMultiple) returns (MultipleUserResponse);
     rpc Delete (UserTag) returns (UserTag);
-    rpc DeleteMultiple (IdRequest) returns (MultipleTagResponse);
+    rpc DeleteMultiple (UserIdRequest) returns (MultipleTagResponse);
 }
 
 message UserTag {

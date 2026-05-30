@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserTagService_Create_FullMethodName         = "/UserTagService/Create"
-	UserTagService_ReadMultiple_FullMethodName   = "/UserTagService/ReadMultiple"
-	UserTagService_Delete_FullMethodName         = "/UserTagService/Delete"
-	UserTagService_DeleteMultiple_FullMethodName = "/UserTagService/DeleteMultiple"
+	UserTagService_Create_FullMethodName           = "/UserTagService/Create"
+	UserTagService_ReadTagMultiple_FullMethodName  = "/UserTagService/ReadTagMultiple"
+	UserTagService_ReadUserMultiple_FullMethodName = "/UserTagService/ReadUserMultiple"
+	UserTagService_Delete_FullMethodName           = "/UserTagService/Delete"
+	UserTagService_DeleteMultiple_FullMethodName   = "/UserTagService/DeleteMultiple"
 )
 
 // UserTagServiceClient is the client API for UserTagService service.
@@ -30,9 +31,10 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserTagServiceClient interface {
 	Create(ctx context.Context, in *UserTag, opts ...grpc.CallOption) (*UserTag, error)
-	ReadMultiple(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error)
+	ReadTagMultiple(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error)
+	ReadUserMultiple(ctx context.Context, in *TagIdRequestMultiple, opts ...grpc.CallOption) (*MultipleUserResponse, error)
 	Delete(ctx context.Context, in *UserTag, opts ...grpc.CallOption) (*UserTag, error)
-	DeleteMultiple(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error)
+	DeleteMultiple(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error)
 }
 
 type userTagServiceClient struct {
@@ -53,10 +55,20 @@ func (c *userTagServiceClient) Create(ctx context.Context, in *UserTag, opts ...
 	return out, nil
 }
 
-func (c *userTagServiceClient) ReadMultiple(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error) {
+func (c *userTagServiceClient) ReadTagMultiple(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MultipleTagResponse)
-	err := c.cc.Invoke(ctx, UserTagService_ReadMultiple_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, UserTagService_ReadTagMultiple_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userTagServiceClient) ReadUserMultiple(ctx context.Context, in *TagIdRequestMultiple, opts ...grpc.CallOption) (*MultipleUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MultipleUserResponse)
+	err := c.cc.Invoke(ctx, UserTagService_ReadUserMultiple_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -73,7 +85,7 @@ func (c *userTagServiceClient) Delete(ctx context.Context, in *UserTag, opts ...
 	return out, nil
 }
 
-func (c *userTagServiceClient) DeleteMultiple(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error) {
+func (c *userTagServiceClient) DeleteMultiple(ctx context.Context, in *UserIdRequest, opts ...grpc.CallOption) (*MultipleTagResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MultipleTagResponse)
 	err := c.cc.Invoke(ctx, UserTagService_DeleteMultiple_FullMethodName, in, out, cOpts...)
@@ -88,9 +100,10 @@ func (c *userTagServiceClient) DeleteMultiple(ctx context.Context, in *IdRequest
 // for forward compatibility.
 type UserTagServiceServer interface {
 	Create(context.Context, *UserTag) (*UserTag, error)
-	ReadMultiple(context.Context, *IdRequest) (*MultipleTagResponse, error)
+	ReadTagMultiple(context.Context, *UserIdRequest) (*MultipleTagResponse, error)
+	ReadUserMultiple(context.Context, *TagIdRequestMultiple) (*MultipleUserResponse, error)
 	Delete(context.Context, *UserTag) (*UserTag, error)
-	DeleteMultiple(context.Context, *IdRequest) (*MultipleTagResponse, error)
+	DeleteMultiple(context.Context, *UserIdRequest) (*MultipleTagResponse, error)
 	mustEmbedUnimplementedUserTagServiceServer()
 }
 
@@ -104,13 +117,16 @@ type UnimplementedUserTagServiceServer struct{}
 func (UnimplementedUserTagServiceServer) Create(context.Context, *UserTag) (*UserTag, error) {
 	return nil, status.Error(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedUserTagServiceServer) ReadMultiple(context.Context, *IdRequest) (*MultipleTagResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ReadMultiple not implemented")
+func (UnimplementedUserTagServiceServer) ReadTagMultiple(context.Context, *UserIdRequest) (*MultipleTagResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReadTagMultiple not implemented")
+}
+func (UnimplementedUserTagServiceServer) ReadUserMultiple(context.Context, *TagIdRequestMultiple) (*MultipleUserResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReadUserMultiple not implemented")
 }
 func (UnimplementedUserTagServiceServer) Delete(context.Context, *UserTag) (*UserTag, error) {
 	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedUserTagServiceServer) DeleteMultiple(context.Context, *IdRequest) (*MultipleTagResponse, error) {
+func (UnimplementedUserTagServiceServer) DeleteMultiple(context.Context, *UserIdRequest) (*MultipleTagResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteMultiple not implemented")
 }
 func (UnimplementedUserTagServiceServer) mustEmbedUnimplementedUserTagServiceServer() {}
@@ -152,20 +168,38 @@ func _UserTagService_Create_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserTagService_ReadMultiple_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IdRequest)
+func _UserTagService_ReadTagMultiple_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserTagServiceServer).ReadMultiple(ctx, in)
+		return srv.(UserTagServiceServer).ReadTagMultiple(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserTagService_ReadMultiple_FullMethodName,
+		FullMethod: UserTagService_ReadTagMultiple_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserTagServiceServer).ReadMultiple(ctx, req.(*IdRequest))
+		return srv.(UserTagServiceServer).ReadTagMultiple(ctx, req.(*UserIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserTagService_ReadUserMultiple_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TagIdRequestMultiple)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserTagServiceServer).ReadUserMultiple(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserTagService_ReadUserMultiple_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserTagServiceServer).ReadUserMultiple(ctx, req.(*TagIdRequestMultiple))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -189,7 +223,7 @@ func _UserTagService_Delete_Handler(srv interface{}, ctx context.Context, dec fu
 }
 
 func _UserTagService_DeleteMultiple_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IdRequest)
+	in := new(UserIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -201,7 +235,7 @@ func _UserTagService_DeleteMultiple_Handler(srv interface{}, ctx context.Context
 		FullMethod: UserTagService_DeleteMultiple_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserTagServiceServer).DeleteMultiple(ctx, req.(*IdRequest))
+		return srv.(UserTagServiceServer).DeleteMultiple(ctx, req.(*UserIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -218,8 +252,12 @@ var UserTagService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserTagService_Create_Handler,
 		},
 		{
-			MethodName: "ReadMultiple",
-			Handler:    _UserTagService_ReadMultiple_Handler,
+			MethodName: "ReadTagMultiple",
+			Handler:    _UserTagService_ReadTagMultiple_Handler,
+		},
+		{
+			MethodName: "ReadUserMultiple",
+			Handler:    _UserTagService_ReadUserMultiple_Handler,
 		},
 		{
 			MethodName: "Delete",

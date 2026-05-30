@@ -9,3 +9,11 @@ message TagResponse {
 message MultipleTagResponse {
     repeated TagResponse tag_ids= 1;
 }
+
+message UserResponse {
+    int32 user_id = 1;
+}
+
+message MultipleUserResponse {
+    repeated UserResponse user_ids= 1;
+}

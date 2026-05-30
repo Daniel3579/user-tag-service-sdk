@@ -21,27 +21,27 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type IdRequest struct {
+type UserIdRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        int32                  `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *IdRequest) Reset() {
-	*x = IdRequest{}
+func (x *UserIdRequest) Reset() {
+	*x = UserIdRequest{}
 	mi := &file_user_tag_requests_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *IdRequest) String() string {
+func (x *UserIdRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*IdRequest) ProtoMessage() {}
+func (*UserIdRequest) ProtoMessage() {}
 
-func (x *IdRequest) ProtoReflect() protoreflect.Message {
+func (x *UserIdRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_user_tag_requests_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -53,25 +53,117 @@ func (x *IdRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use IdRequest.ProtoReflect.Descriptor instead.
-func (*IdRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use UserIdRequest.ProtoReflect.Descriptor instead.
+func (*UserIdRequest) Descriptor() ([]byte, []int) {
 	return file_user_tag_requests_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *IdRequest) GetUserId() int32 {
+func (x *UserIdRequest) GetUserId() int32 {
 	if x != nil {
 		return x.UserId
 	}
 	return 0
 }
 
+type TagIdRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TagId         int32                  `protobuf:"varint,1,opt,name=tag_id,json=tagId,proto3" json:"tag_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TagIdRequest) Reset() {
+	*x = TagIdRequest{}
+	mi := &file_user_tag_requests_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TagIdRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TagIdRequest) ProtoMessage() {}
+
+func (x *TagIdRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_user_tag_requests_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TagIdRequest.ProtoReflect.Descriptor instead.
+func (*TagIdRequest) Descriptor() ([]byte, []int) {
+	return file_user_tag_requests_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TagIdRequest) GetTagId() int32 {
+	if x != nil {
+		return x.TagId
+	}
+	return 0
+}
+
+type TagIdRequestMultiple struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TagIds        []*TagIdRequest        `protobuf:"bytes,1,rep,name=tag_ids,json=tagIds,proto3" json:"tag_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TagIdRequestMultiple) Reset() {
+	*x = TagIdRequestMultiple{}
+	mi := &file_user_tag_requests_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TagIdRequestMultiple) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TagIdRequestMultiple) ProtoMessage() {}
+
+func (x *TagIdRequestMultiple) ProtoReflect() protoreflect.Message {
+	mi := &file_user_tag_requests_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TagIdRequestMultiple.ProtoReflect.Descriptor instead.
+func (*TagIdRequestMultiple) Descriptor() ([]byte, []int) {
+	return file_user_tag_requests_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TagIdRequestMultiple) GetTagIds() []*TagIdRequest {
+	if x != nil {
+		return x.TagIds
+	}
+	return nil
+}
+
 var File_user_tag_requests_proto protoreflect.FileDescriptor
 
 const file_user_tag_requests_proto_rawDesc = "" +
 	"\n" +
-	"\x17user_tag_requests.proto\"$\n" +
-	"\tIdRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\x05R\x06userIdB\x13Z\x11./gen;user_tag_pbb\x06proto3"
+	"\x17user_tag_requests.proto\"(\n" +
+	"\rUserIdRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x05R\x06userId\"%\n" +
+	"\fTagIdRequest\x12\x15\n" +
+	"\x06tag_id\x18\x01 \x01(\x05R\x05tagId\">\n" +
+	"\x14TagIdRequestMultiple\x12&\n" +
+	"\atag_ids\x18\x01 \x03(\v2\r.TagIdRequestR\x06tagIdsB\x13Z\x11./gen;user_tag_pbb\x06proto3"
 
 var (
 	file_user_tag_requests_proto_rawDescOnce sync.Once
@@ -85,16 +177,19 @@ func file_user_tag_requests_proto_rawDescGZIP() []byte {
 	return file_user_tag_requests_proto_rawDescData
 }
 
-var file_user_tag_requests_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_user_tag_requests_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_user_tag_requests_proto_goTypes = []any{
-	(*IdRequest)(nil), // 0: IdRequest
+	(*UserIdRequest)(nil),        // 0: UserIdRequest
+	(*TagIdRequest)(nil),         // 1: TagIdRequest
+	(*TagIdRequestMultiple)(nil), // 2: TagIdRequestMultiple
 }
 var file_user_tag_requests_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: TagIdRequestMultiple.tag_ids:type_name -> TagIdRequest
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_user_tag_requests_proto_init() }
@@ -108,7 +203,7 @@ func file_user_tag_requests_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_user_tag_requests_proto_rawDesc), len(file_user_tag_requests_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

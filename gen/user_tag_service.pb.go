@@ -80,14 +80,13 @@ const file_user_tag_service_proto_rawDesc = "" +
 	"\x16user_tag_service.proto\x1a\x17user_tag_requests.proto\x1a\x18user_tag_responses.proto\"9\n" +
 	"\aUserTag\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x05R\x06userId\x12\x15\n" +
-	"\x06tag_id\x18\x02 \x01(\x05R\x05tagId2\xb2\x01\n" +
+	"\x06tag_id\x18\x02 \x01(\x05R\x05tagId2\xff\x01\n" +
 	"\x0eUserTagService\x12\x1c\n" +
-	"\x06Create\x12\b.UserTag\x1a\b.UserTag\x120\n" +
-	"\fReadMultiple\x12\n" +
-	".IdRequest\x1a\x14.MultipleTagResponse\x12\x1c\n" +
-	"\x06Delete\x12\b.UserTag\x1a\b.UserTag\x122\n" +
-	"\x0eDeleteMultiple\x12\n" +
-	".IdRequest\x1a\x14.MultipleTagResponseB\x13Z\x11./gen;user_tag_pbb\x06proto3"
+	"\x06Create\x12\b.UserTag\x1a\b.UserTag\x127\n" +
+	"\x0fReadTagMultiple\x12\x0e.UserIdRequest\x1a\x14.MultipleTagResponse\x12@\n" +
+	"\x10ReadUserMultiple\x12\x15.TagIdRequestMultiple\x1a\x15.MultipleUserResponse\x12\x1c\n" +
+	"\x06Delete\x12\b.UserTag\x1a\b.UserTag\x126\n" +
+	"\x0eDeleteMultiple\x12\x0e.UserIdRequest\x1a\x14.MultipleTagResponseB\x13Z\x11./gen;user_tag_pbb\x06proto3"
 
 var (
 	file_user_tag_service_proto_rawDescOnce sync.Once
@@ -103,21 +102,25 @@ func file_user_tag_service_proto_rawDescGZIP() []byte {
 
 var file_user_tag_service_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_user_tag_service_proto_goTypes = []any{
-	(*UserTag)(nil),             // 0: UserTag
-	(*IdRequest)(nil),           // 1: IdRequest
-	(*MultipleTagResponse)(nil), // 2: MultipleTagResponse
+	(*UserTag)(nil),              // 0: UserTag
+	(*UserIdRequest)(nil),        // 1: UserIdRequest
+	(*TagIdRequestMultiple)(nil), // 2: TagIdRequestMultiple
+	(*MultipleTagResponse)(nil),  // 3: MultipleTagResponse
+	(*MultipleUserResponse)(nil), // 4: MultipleUserResponse
 }
 var file_user_tag_service_proto_depIdxs = []int32{
 	0, // 0: UserTagService.Create:input_type -> UserTag
-	1, // 1: UserTagService.ReadMultiple:input_type -> IdRequest
-	0, // 2: UserTagService.Delete:input_type -> UserTag
-	1, // 3: UserTagService.DeleteMultiple:input_type -> IdRequest
-	0, // 4: UserTagService.Create:output_type -> UserTag
-	2, // 5: UserTagService.ReadMultiple:output_type -> MultipleTagResponse
-	0, // 6: UserTagService.Delete:output_type -> UserTag
-	2, // 7: UserTagService.DeleteMultiple:output_type -> MultipleTagResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	1, // 1: UserTagService.ReadTagMultiple:input_type -> UserIdRequest
+	2, // 2: UserTagService.ReadUserMultiple:input_type -> TagIdRequestMultiple
+	0, // 3: UserTagService.Delete:input_type -> UserTag
+	1, // 4: UserTagService.DeleteMultiple:input_type -> UserIdRequest
+	0, // 5: UserTagService.Create:output_type -> UserTag
+	3, // 6: UserTagService.ReadTagMultiple:output_type -> MultipleTagResponse
+	4, // 7: UserTagService.ReadUserMultiple:output_type -> MultipleUserResponse
+	0, // 8: UserTagService.Delete:output_type -> UserTag
+	3, // 9: UserTagService.DeleteMultiple:output_type -> MultipleTagResponse
+	5, // [5:10] is the sub-list for method output_type
+	0, // [0:5] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
